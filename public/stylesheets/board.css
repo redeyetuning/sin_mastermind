@@ -1,0 +1,26 @@
+/* RESETS */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* ELEMENTS */
+
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	background-color: none;
+}
+
+.board-container {
+	width: 200px;
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+
+	background-color: red;
+}
