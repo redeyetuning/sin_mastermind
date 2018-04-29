@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="stylesheets/board.css">
+	<link rel="stylesheet" type="text/css" href="../stylesheets/board.css">
 	<title>Sinatra Mastermind</title>
 </head>
 <body>
@@ -17,7 +17,7 @@
 			</div>
 		</div>
 		<div class = "input-container">
-			<form name="input-form">
+			<form name="input-form" method = "get" action="player/guess">
 				<div class = "select">
 					<label for="col1">Choice 1</label>
 					<select name = "col1" class = "col-select"><%= col_options %></select>
@@ -35,9 +35,10 @@
 					<select name = "col4" class = "col-select"><%= col_options %></select>
 				</div>
 				<div class  = "submit-holder">
-					<input type = "submit" value="Make Guess">
+					<input type = "submit" " value="Make Guess">
 				</div>
 			</form>
+			<p><%= guess_text %></p>
 		</div>
 		<div class = "footer"> </div>
 	</div>

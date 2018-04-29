@@ -8,45 +8,37 @@
 #To play use Mastermind.play
  
   
-module Mastermind
- extend self
+class Mastermind
 
   def initialize
-  end
-   
-  def play
-    puts "Do you want to (G)uess or(C)hoose the secret code?"
-    choice = gets.chomp.upcase until choice == "G" || choice == "C"
-    choice == "G" ? player_plays : ai_plays
-  end
-
   
-  private
+  end
          
-    def player_plays
-      i = 1
-      won = false
-      puts "\nYou have 12 guesses to identify the A.I's code. A.I. is generating a code.... \n\n"
-      code = generate_code
-      while i<13 && !won
-        print "Your guess was #{guess = get_code("Your Guess", i)}"
-        won = true if match?(code, guess)
-        i += 1
-      end
-      puts "You ran out of guesses!" if i ==13
+    def init_player
+      @code = Array.new(4){["B","G","O","P","R","Y"].sample}
+      @turns = 1
+      @won = false
+      #puts "\nYou have 12 guesses to identify the A.I's code. A.I. is generating a code.... \n\n"
+      
+      #while i<13 && !won
+        #return "Your guess was #{guess = get_code("Your Guess", i)}"
+        #won = true if match?(@code, guess)
+        #i += 1
+      #end
+      #puts "You ran out of guesses!" if i ==13
     end
 
     def ai_plays
       i = 1
       won = false
       guess = ["B","G","O","P"] # First guess
-      all_code_optns = [*1..6].repeated_permutation(4).to_a.collect{|x| x = num_to_letter(x)} #1296 item array of possible answers 
-      code = get_code("\nChoose your code for the A.I. to guess!")
-      puts "\nYou chose #{code}\n\n"
+      all_code_optns = [*0..5].repeated_permutation(4).to_a.collect{|x| x = num_to_letter(x)} #1296 item array of possible answers 
+      @code = get_code("\nChoose your code for the A.I. to guess!")
+      puts "\nYou chose #{@code}\n\n"
         
       while i<13 && !won
         print "A.I.'s' guess \##{i} was #{guess}"
-        won = true if match?(code,guess) 
+        won = true if match?(@code,guess) 
         guess_match_result = @lst_match_result.dup
        	all_code_optns.select! {|x| match?(x,guess,false) || guess_match_result == @lst_match_result} #Simplified implementation of Knuth's Algorithm 
         guess = all_code_optns.sample
@@ -62,28 +54,29 @@ module Mastermind
       code
     end
 
-    def generate_code
-      puts "A.I. has generated a 4-character code from the colours (B)lue, (G)reen, (O)range, (P)urple, (R)ed, and (Y)ellow!\n\n"
-      code = Array.new(4){["B","G","O","P","R","Y"].sample}
-    end
+    #def generate_code
+      
+     # "A.I. has generated a 4-character code from the colours (B)lue, (G)reen, (O)range, (P)urple, (R)ed, and (Y)ellow!\n\n"
+    #end
 
     def num_to_letter(code)
       out = []
       code.each do |x|
         out.push case x
-          when 1 then ("B") 
-          when 2 then ("G")
-          when 3 then ("O")
-          when 4 then ("P") 
-          when 5 then ("R") 
-          when 6 then ("Y")
+          when 0 then ("B") 
+          when 1 then ("G")
+          when 2 then ("O")
+          when 3 then ("P") 
+          when 4 then ("R") 
+          when 5 then ("Y")
         end
       end
       return out
       end
 
-    def match?(code, guess, print=true)
-      test_code = code.dup  
+    def match?( guess, print=true)
+      test_code = @code.dup
+      print test_code  
       test_guess = guess.dup
       @lst_match_result = {:TM=>0,:CM=>0,:X=>0} #TM = Total Match, CM = Colour match
       
@@ -91,13 +84,14 @@ module Mastermind
          
       test_guess.each_with_index do |x,i|#Test for colour only matches
         if test_code.index(x) then test_code[test_code.index(x)] = "-" and test_guess[i] = "+" and @lst_match_result[:CM] +=1
-        elsif x.to_s.match(/[BGOPRY123456789]/) then @lst_match_result[:X] += 1 end
+        elsif x.to_s.match(/[BGOPRY0123456789]/) then @lst_match_result[:X] += 1 end
       end
          
       if @lst_match_result[:TM] == 4 #All exact matches
       	puts ". ******** The code was cracked! ********" if print 
       	return true
-      else print " which had #{@lst_match_result[:TM]} EXACT MATCHES and #{@lst_match_result[:CM]} COLOUR ONLY MATCHES \n\n" if print end
+      else " Your code was #{guess} which had #{@lst_match_result[:TM]} EXACT MATCHES and #{@lst_match_result[:CM]} COLOUR ONLY MATCHES \n\n" if print 
+      end
     end
 
 end#Matermind class end
