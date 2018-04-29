@@ -9,7 +9,7 @@ end
 
 def gen_pegs css_class
 	squares = *(1..48)
-	squares.map{|x| "<div class ='#{css_class}' id = #{x}></div>"}.join
+	squares.map{|x| "<div class ='#{css_class}' id = '#{x}'></div>"}.join
 end
 
 
