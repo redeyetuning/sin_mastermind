@@ -1,3 +1,3 @@
 require 'sinatra'
-require 'sin_mastermind.rb'
+require './sin_mastermind.rb'
 run Sinatra::Application
