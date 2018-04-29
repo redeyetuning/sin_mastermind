@@ -5,14 +5,41 @@
 	<title>Sinatra Mastermind</title>
 </head>
 <body>
-	<h1>Sinatra Mastermind </h1>
-	<div class = "board-container">
-		<div class = "peg" id = "A1">A1</div>
-		<div class = "peg" id = "A2">A2</div>
-		<div class = "peg" id = "A3">A3</div>
-		<div class = "peg" id = "A1">A4</div>
-		<div class = "peg" id = "A2">B1</div>
-		<div class = "peg" id = "A3">B2</div>
+	<div id="page-container">
+		<div class ="header"><h1>Sinatra Mastermind</h1></div>
+		
+		<div class = "board-container">
+			<div class = "guess-container">
+				<%= guess_pegs %>
+			</div>
+			<div class = "cor-guess-container">
+				<%= cor_guess_pegs %>
+			</div>
+		</div>
+		<div class = "input-container">
+			<form name="input-form">
+				<div class = "select">
+					<label for="col1">Choice 1</label>
+					<select name = "col1" class = "col-select"><%= col_options %></select>
+				</div>
+				<div class = "select">
+					<label for="col2">Choice 2</label>
+					<select name = "col2" class = "col-select"><%= col_options %></select>
+				</div>
+				<div class = "select">
+					<label for="col3">Choice 3</label>
+					<select name = "col3" class = "col-select"><%= col_options %></select>
+				</div>
+				<div class = "select">
+					<label for="col4">Choice 4</label>
+					<select name = "col4" class = "col-select"><%= col_options %></select>
+				</div>
+				<div class  = "submit-holder">
+					<input type = "submit" value="Make Guess">
+				</div>
+			</form>
+		</div>
+		<div class = "footer"> </div>
 	</div>
 </body>
 </html>
