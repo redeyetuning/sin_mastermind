@@ -11,7 +11,7 @@ end
 
 def gen_pegs css_class
 	squares = *(1..48)
-	squares.map{|x| "<div class ='#{css_class}' id = '#{x}'></div>"}.join
+	squares.map{|x| "<div class ='#{css_class}' id = '#{css_class}#{x}'></div>"}.join
 end
 
 get '/' do
@@ -21,7 +21,7 @@ end
 get '/player/guess' do
 	guess = [params["col1"], params["col2"], params["col3"], params["col4"]]
 	guess_text = @@game.move guess
-	guess_peg_cols = @@game.guess_pegs
+	guess_peg_cols = @@game.guess_peg_cols
 	erb :player, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => guess_text, :guess_peg_cols => guess_peg_cols} 
 end
 

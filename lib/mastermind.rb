@@ -48,11 +48,12 @@ class Mastermind
       print @lst_match_result
     end
 
-    def guess_pegs
-
+    def guess_peg_cols
+      @guess_peg_cols.each_with_index.map{|x,i|"#guess-peg#{i+1}{background-color:#{x};} "}.join
     end
 
     def move guess
+      guess.each{|x| @guess_peg_cols << x}
       output = match?(guess)
       output += "<h2> ******** The code was cracked! ******** </h2>" if @won
       @turns -= 1
