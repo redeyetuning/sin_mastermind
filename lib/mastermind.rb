@@ -16,7 +16,7 @@ class Mastermind
          
     def init_player
       @code = Array.new(4){["B","G","O","P","R","Y"].sample}
-      @turns = 1
+      @turns = 12
       @won = false
       #puts "\nYou have 12 guesses to identify the A.I's code. A.I. is generating a code.... \n\n"
       
@@ -47,19 +47,7 @@ class Mastermind
       print @lst_match_result
     end
 
-    def get_code(reason, *round)    
-      puts "#{reason} #{round[0]}\nInsert code as 4 comma separated values from: (B)lue, (G)reen, (O)range, (P)urple, (R)ed, or (Y)ellow."
-      code = gets.chomp.upcase.split(",")
-      puts "That code is not valid. Please try again!" or code = gets.chomp.upcase.split(",") until code.length ==4 && code.all?{|x| x.match(/[BGOPRY]/)}
-      code
-    end
-
-    #def generate_code
-      
-     # "A.I. has generated a 4-character code from the colours (B)lue, (G)reen, (O)range, (P)urple, (R)ed, and (Y)ellow!\n\n"
-    #end
-
-    def num_to_letter(code)
+    def num_to_letter code
       out = []
       code.each do |x|
         out.push case x
@@ -74,7 +62,15 @@ class Mastermind
       return out
       end
 
-    def match?( guess, print=true)
+    def move guess
+      output = match?(guess)
+      output += "<h2> ******** The code was cracked! ******** </h2>" if @won
+      @turns -= 1
+      output += "<h2> ******** You ran out of Moves! ******** </h2>" if @turns == 0
+      output
+    end
+
+    def match? guess
       test_code = @code.dup
       print test_code  
       test_guess = guess.dup
@@ -87,11 +83,10 @@ class Mastermind
         elsif x.to_s.match(/[BGOPRY0123456789]/) then @lst_match_result[:X] += 1 end
       end
          
-      if @lst_match_result[:TM] == 4 #All exact matches
-      	puts ". ******** The code was cracked! ********" if print 
-      	return true
-      else " Your code was #{guess} which had #{@lst_match_result[:TM]} EXACT MATCHES and #{@lst_match_result[:CM]} COLOUR ONLY MATCHES \n\n" if print 
-      end
+      @won =true if @lst_match_result[:TM] == 4 #All exact matches
+    	 
+      " Your code was #{guess} which had #{@lst_match_result[:TM]} EXACT MATCHES and #{@lst_match_result[:CM]} COLOUR ONLY MATCHES \n\n" 
+      
     end
 
 end#Matermind class end

@@ -21,9 +21,7 @@ end
 get '/player/guess' do
 	guess = [params["col1"].to_i, params["col2"].to_i, params["col3"].to_i, params["col4"].to_i]
 	guess = @@game.num_to_letter (guess)
-	guess_text = @@game.match? guess
-	print guess
-	print guess_text
+	guess_text = @@game.move guess
 	erb :player, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => guess_text} 
 end
 
