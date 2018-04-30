@@ -9,9 +9,13 @@ def gen_col_options
 	cols.map{|x| "<option value='#{x.downcase}'>#{x}</option>"}.join
 end
 
-def gen_pegs css_class
+def gen_pegs css_class, border=true
 	squares = *(1..48)
-	squares.map{|x| "<div class ='#{css_class}' id = '#{css_class}#{x}'></div>"}.join
+	if border 
+		squares.map{|x| if x<5 then "<div class='top-square'><div class ='#{css_class}' id = '#{css_class}#{x}'></div></div>" else "<div class='square'><div class ='#{css_class}' id = '#{css_class}#{x}'></div></div>" end}.join
+	else
+		squares.map{|x| "<div class ='#{css_class}' id = '#{css_class}#{x}'></div>"}.join
+	end
 end
 
 get '/' do
@@ -28,7 +32,7 @@ end
 
 get '/player' do
 	@@guess_pegs = gen_pegs("guess-peg")
-	@@cor_guess_pegs = gen_pegs("cor-peg")
+	@@cor_guess_pegs = gen_pegs("cor-peg", false)
 	@@col_options = gen_col_options
 	@@game = Mastermind.new
 	@@game.init_player

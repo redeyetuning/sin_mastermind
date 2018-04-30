@@ -51,7 +51,7 @@ class Mastermind
 
     def peg_cols(item)
       item == "guess" ? cols = @guess_peg_cols : cols = @cor_peg_cols
-      cols.each_with_index.map{|x,i|"##{item}-peg#{i+1}{background-color:#{x};} "}.join
+      output = cols.each_with_index.map{|x,i|"##{item}-peg#{i+1}{background-color:#{x}; #{"box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.59)" unless x.nil?};} "}.join
     end
 
     def move guess
