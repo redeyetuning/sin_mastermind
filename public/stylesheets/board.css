@@ -72,16 +72,16 @@ body {
 				text-align: center; 
 			}
 
-		.cor-guess-container{
+		.cor-container{
 			display: grid;
 			grid-template-columns: auto auto;
 			width: 50px;
 			height: 600px;
 			display: grid;
-			background-color: green;
+			background-color: #7c2a01;
 		}
 
-			.cor-guess-peg{
+			.cor-peg{
 				height: 40%;
 				width: 40%;
 				border-radius: 100%;

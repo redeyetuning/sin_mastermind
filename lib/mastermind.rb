@@ -19,6 +19,7 @@ class Mastermind
       @turns = 12
       @won = false
       @guess_peg_cols = []
+      @cor_peg_cols =[]
       #puts "\nYou have 12 guesses to identify the A.I's code. A.I. is generating a code.... \n\n"
       
       #while i<13 && !won
@@ -48,8 +49,9 @@ class Mastermind
       print @lst_match_result
     end
 
-    def guess_peg_cols
-      @guess_peg_cols.each_with_index.map{|x,i|"#guess-peg#{i+1}{background-color:#{x};} "}.join
+    def peg_cols(item)
+      item == "guess" ? cols = @guess_peg_cols : cols = @cor_peg_cols
+      cols.each_with_index.map{|x,i|"##{item}-peg#{i+1}{background-color:#{x};} "}.join
     end
 
     def move guess
@@ -70,11 +72,17 @@ class Mastermind
       test_guess.each_with_index {|x,i| test_code[i] = "-" and test_guess[i] = "+" and  @lst_match_result[:TM] +=1 if x == test_code[i]}#Test for exact matches first
          
       test_guess.each_with_index do |x,i|#Test for colour only matches
-        if test_code.index(x) then test_code[test_code.index(x)] = "-" and test_guess[i] = "+" and @lst_match_result[:CM] +=1
-        elsif x.to_s.match(/[BGOPRY0123456789]/) then @lst_match_result[:X] += 1 end
+        if test_code.index(x) then test_code[test_code.index(x)] = "-" and test_guess[i] = "+" and @lst_match_result[:CM] +=1 end
       end
          
       @won =true if @lst_match_result[:TM] == 4 #All exact matches
+      
+      (@lst_match_result[:TM]).times { @cor_peg_cols << "black"}
+      (@lst_match_result[:CM]).times { @cor_peg_cols << "white"}
+      (4-@lst_match_result[:TM]-@lst_match_result[:CM]).times { @cor_peg_cols << nil}
+      
+
+      
     	 
       " Your code was #{guess} which had #{@lst_match_result[:TM]} EXACT MATCHES and #{@lst_match_result[:CM]} COLOUR ONLY MATCHES \n\n" 
       

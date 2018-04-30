@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style><%= guess_peg_cols %></style>
+	<style><%= guess_peg_cols %><%= cor_peg_cols %></style>
 	<link rel="stylesheet" type="text/css" href="../stylesheets/board.css">
 	<title>Sinatra Mastermind</title>
 </head>
@@ -13,7 +13,7 @@
 			<div class = "guess-container">
 				<%= guess_pegs %>
 			</div>
-			<div class = "cor-guess-container">
+			<div class = "cor-container">
 				<%= cor_guess_pegs %>
 			</div>
 		</div>
