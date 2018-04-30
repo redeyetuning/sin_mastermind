@@ -35,7 +35,7 @@ body {
 		padding-top: 20px;
 		width: 100%;
 		text-align: center;
-		background-color: blue;
+		background-color: ;
 	}
 
 /* MASTERMIN BOARD */
@@ -58,14 +58,15 @@ body {
 			width: 200px;
 			height: 600px;
 			display: grid;
-			background-color: pink;
+			background-color: #7c2a01;
 		}
 
 			.guess-peg{
 				height: 40%;
 				width: 40%;
+				border: 1px solid #722701;
 				border-radius: 100%;
-				background-color: red;
+				background-color: white;
 				align-self: center;
 				justify-self: center;
 				text-align: center; 
@@ -84,7 +85,6 @@ body {
 				height: 40%;
 				width: 40%;
 				border-radius: 100%;
-				background-color: red;
 				align-self: center;
 				justify-self: center;
 				text-align: center; 
@@ -93,7 +93,7 @@ body {
 /* INPUTS */
 	.input-container{
 		grid-area: input-container;
-		background-color: purple;
+		background-color: ;
 	}
 
 	form{
@@ -118,6 +118,6 @@ body {
 
 		.footer{
 			grid-area: footer;
-			background-color: red;
+			background-color: ;
 		}
 

@@ -15,9 +15,10 @@ class Mastermind
   end
          
     def init_player
-      @code = Array.new(4){["B","G","O","P","R","Y"].sample}
+      @code = Array.new(4){["blue","green","orange","purple","red","yellow"].sample}
       @turns = 12
       @won = false
+      @guess_peg_cols = []
       #puts "\nYou have 12 guesses to identify the A.I's code. A.I. is generating a code.... \n\n"
       
       #while i<13 && !won
@@ -47,20 +48,9 @@ class Mastermind
       print @lst_match_result
     end
 
-    def num_to_letter code
-      out = []
-      code.each do |x|
-        out.push case x
-          when 0 then ("B") 
-          when 1 then ("G")
-          when 2 then ("O")
-          when 3 then ("P") 
-          when 4 then ("R") 
-          when 5 then ("Y")
-        end
-      end
-      return out
-      end
+    def guess_pegs
+
+    end
 
     def move guess
       output = match?(guess)
