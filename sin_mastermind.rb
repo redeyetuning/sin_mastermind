@@ -18,8 +18,24 @@ def gen_pegs css_class, border=true
 	end
 end
 
+def board_init
+	@@guess_pegs = gen_pegs("guess-peg")
+	@@cor_guess_pegs = gen_pegs("cor-peg", false)
+	@@col_options = gen_col_options
+	@@game = Mastermind.new
+end
+
+
 get '/' do
 	erb :index
+end
+
+
+get '/player' do
+	board_init
+	@@game.init_player
+	erb :player, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => nil, :guess_peg_cols => nil, :cor_peg_cols => nil }
+
 end
 
 get '/player/guess' do
@@ -30,13 +46,7 @@ get '/player/guess' do
 	erb :player, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => guess_text, :guess_peg_cols => guess_peg_cols, :cor_peg_cols => cor_peg_cols} 
 end
 
-get '/player' do
-	@@guess_pegs = gen_pegs("guess-peg")
-	@@cor_guess_pegs = gen_pegs("cor-peg", false)
-	@@col_options = gen_col_options
-	@@game = Mastermind.new
-	@@game.init_player
-	erb :player, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => nil, :guess_peg_cols => nil, :cor_peg_cols => nil }
-
+get '/ai' do
+	board_init
+	@@game.init_ai
 end
-
