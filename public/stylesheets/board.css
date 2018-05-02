@@ -20,14 +20,15 @@ body {
 }
 
 #page-container{
-	width: 100%;
-	height: 100%;
+	
+	
 	display: grid;
-	grid-template-rows: 80px auto 50px;
-	grid-template-columns: 10% 40% 40% 10%;
+	grid-template-rows: 80px auto auto 50px;
+	grid-template-columns: 10% minmax(250px, auto) 40% 10%;
 	grid-template-areas: 	"header header header header"
-												"left board-container input-container right"
-												"footer footer footer footer"
+							"intro intro intro intro"
+							"left board-container input-container right"
+							"footer footer footer footer"
 }
 
 	.header{
@@ -36,6 +37,13 @@ body {
 		width: 100%;
 		text-align: center;
 		background-color: ;
+	}
+
+	.intro{
+		grid-area: intro;
+		width: 100%;
+		text-align: center;
+		padding: 0 0 20px 0;
 	}
 
 /* MASTERMIND BOARD */

@@ -8,7 +8,7 @@
 <body>
 	<div id="page-container">
 		<div class ="header"><h1>Sinatra Mastermind</h1></div>
-		
+		<div class ="intro"><%= intro %></div>
 		<div class = "board-container">
 			<div class = "guess-container">
 				<%= guess_pegs %>
@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		<div class = "input-container">
-			<form name="input-form" method = "get" action="../player/guess">
+			<form name="input-form" method = "get" action="../<%= parent %>/guess">
 				<div class = "select">
 					<label for="col1">Choice 1</label>
 					<select name = "col1" class = "col-select"><%= col_options %></select>

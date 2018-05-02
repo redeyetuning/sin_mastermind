@@ -25,6 +25,10 @@ def board_init
 	@@game = Mastermind.new
 end
 
+def col_pegs
+	guess_peg_cols = @@game.peg_cols("guess")
+	cor_peg_cols = @@game.peg_cols("cor")
+end
 
 get '/' do
 	erb :index
@@ -34,19 +38,31 @@ end
 get '/player' do
 	board_init
 	@@game.init_player
-	erb :player, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => nil, :guess_peg_cols => nil, :cor_peg_cols => nil }
+	intro = "<p>A.I. has chosen a 4 colour code for you to guess - try to guess the pattern within twelve turns!</p>
+	<p>Once you submit a guess, the A.I. provides feedback by placing from zero to four 'clue pins' - </p></br> 
+<ul><li>- A BLACK PIN is displayed for each guess digit which is of the correct color AND in the correct position.</li> 
+</li>- A WHITE PIN is displayed for each guess digit whoses colour matchesthe code but is not in the correct position.</li></ul>
+"
+	erb :player, locals: {:parent => "player", :intro => intro, :guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => nil, :guess_peg_cols => nil, :cor_peg_cols => nil }
 
 end
 
 get '/player/guess' do
 	guess = [params["col1"], params["col2"], params["col3"], params["col4"]]
 	guess_text = @@game.move guess
-	guess_peg_cols = @@game.peg_cols("guess")
-	cor_peg_cols = @@game.peg_cols("cor")
-	erb :player, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => guess_text, :guess_peg_cols => guess_peg_cols, :cor_peg_cols => cor_peg_cols} 
+	col_pegs
+	erb :player, locals: {:parent => "player", :intro => intro, :guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => guess_text, :guess_peg_cols => guess_peg_cols, :cor_peg_cols => cor_peg_cols} 
 end
 
 get '/ai' do
 	board_init
 	@@game.init_ai
+	intro = "<p>Choose a 4 colour code for the A.I. to guess!"
+	erb :player, locals: {:parent => "ai", :intro => intro, :guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => nil, :guess_peg_cols => nil, :cor_peg_cols => nil}
+end
+
+get '/ai/guess' do
+	col_pegs
+	erb :ai, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :guess_text => nil, :guess_peg_cols => nil, :cor_peg_cols => nil}
+
 end
