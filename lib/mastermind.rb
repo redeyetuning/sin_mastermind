@@ -29,16 +29,14 @@ class Mastermind
     output =""
          
     while @turns <13 && !won
-      won =true if match?(@code,guess) == true  
-      output += "<p>A.I.'s' guess \##{@turns} was #{guess} had #{@lst_match_result}</p>"
+      won =true && output = guess if match?(@code,guess) == true  
       guess.each{|x| @guess_peg_cols << x}
       guess_match_result = @lst_match_result.dup
      	all_code_optns.select! {|x| match?(x,guess,false) == true || guess_match_result == @lst_match_result} #Simplified implementation of Knuth's Algorithm 
       guess = all_code_optns.sample
       @turns += 1
-      
     end 
-    output
+    "<h2>******** AI found your code in #{13-@turns} turns! ********</h2>"
   end
 
   def peg_cols(item)
@@ -49,9 +47,9 @@ class Mastermind
   def move guess
     guess.each{|x| @guess_peg_cols << x}
     output = match?(@code, guess)
-    output += "<h2> ******** The code was cracked! ******** </h2>" if @won
+    output += "<h2>******** The code was cracked! ********</h2>" if @won
     @turns += 1
-    output += "<h2> ******** You ran out of Moves! ******** </h2>" if @turns == 13
+    output += "<h2>******** You ran out of Moves! ********</h2>" if @turns == 13
     output
   end
 
@@ -78,7 +76,7 @@ class Mastermind
       @won = true
       true
     else
-      "You guessed #{guess.each{|x| x.capitalize}} which had #{@lst_match_result[:TM]} EXACT MATCHES and #{@lst_match_result[:CM]} COLOUR ONLY MATCHES \n\n" 
+      "Your guess had #{@lst_match_result[:TM]} EXACT MATCHES and #{@lst_match_result[:CM]} COLOUR ONLY MATCHES \n\n" 
     end
   end
 
