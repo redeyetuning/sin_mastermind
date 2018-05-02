@@ -19,28 +19,24 @@ class Mastermind
          
   def init_player
     @code = Array.new(4){["blue","green","orange","purple","red","yellow"].sample}
-    
-    #puts "\nYou have 12 guesses to identify the A.I's code. A.I. is generating a code.... \n\n"
-   
-  end
-
-  def init_ai
-    
   end
 
   def ai_plays code
     @code = code
     all_code_optns = ["blue","green","orange","purple","red","yellow"].repeated_permutation(4).to_a#1296 item array of possible answers 
-    guess = ["Blue","Green","Orange","Purple"] # First guess
-    output = ""
+    guess = ["blue","green","orange","purple"] # First guess
+    won = false
+    output =""
          
-    while @turns <13 && !@won
-      won = true if match?(@code,guess) 
+    while @turns <13 && !won
+      won =true if match?(@code,guess) == true  
+      output += "<p>A.I.'s' guess \##{@turns} was #{guess} had #{@lst_match_result}</p>"
+      guess.each{|x| @guess_peg_cols << x}
       guess_match_result = @lst_match_result.dup
-     	all_code_optns.select! {|x| match?(x,guess) || guess_match_result == @lst_match_result} #Simplified implementation of Knuth's Algorithm 
+     	all_code_optns.select! {|x| match?(x,guess,false) == true || guess_match_result == @lst_match_result} #Simplified implementation of Knuth's Algorithm 
       guess = all_code_optns.sample
       @turns += 1
-      output += "<p>A.I.'s' guess \##{@turns} was #{guess} had #{@lst_match_result}</p>"
+      
     end 
     output
   end
@@ -59,7 +55,7 @@ class Mastermind
     output
   end
 
-  def match? code, guess
+  def match? code, guess, col=true
     test_code = code.dup
     print test_code  
     test_guess = guess.dup
@@ -71,14 +67,19 @@ class Mastermind
       if test_code.index(x) then test_code[test_code.index(x)] = "-" and test_guess[i] = "+" and @lst_match_result[:CM] +=1 end
     end
        
-    @won = true if @lst_match_result[:TM] == 4 #All exact matches
     
-    (@lst_match_result[:TM]).times { @cor_peg_cols << "black"}
-    (@lst_match_result[:CM]).times { @cor_peg_cols << "white"}
-    (4-@lst_match_result[:TM]-@lst_match_result[:CM]).times { @cor_peg_cols << nil}
+    if col
+      (@lst_match_result[:TM]).times { @cor_peg_cols << "black"}
+      (@lst_match_result[:CM]).times { @cor_peg_cols << "white"}
+      (4-@lst_match_result[:TM]-@lst_match_result[:CM]).times { @cor_peg_cols << nil} 
+    end
     
-    "You guessed #{guess.each{|x| x.capitalize}} which had #{@lst_match_result[:TM]} EXACT MATCHES and #{@lst_match_result[:CM]} COLOUR ONLY MATCHES \n\n" 
-    
+    if @lst_match_result[:TM] == 4 #All exact matches
+      @won = true
+      true
+    else
+      "You guessed #{guess.each{|x| x.capitalize}} which had #{@lst_match_result[:TM]} EXACT MATCHES and #{@lst_match_result[:CM]} COLOUR ONLY MATCHES \n\n" 
+    end
   end
 
 end#Matermind class end

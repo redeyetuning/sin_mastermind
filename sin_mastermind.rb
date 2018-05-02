@@ -26,8 +26,8 @@ def board_init
 end
 
 def col_pegs
-	guess_peg_cols = @@game.peg_cols("guess")
-	cor_peg_cols = @@game.peg_cols("cor")
+	@@guess_peg_cols = @@game.peg_cols("guess")
+	@@cor_peg_cols = @@game.peg_cols("cor")
 end
 
 get '/' do
@@ -51,12 +51,12 @@ get '/player/guess' do
 	guess = [params["col1"], params["col2"], params["col3"], params["col4"]]
 	guess_text = @@game.move guess
 	col_pegs
-	erb :player, locals: {:parent => "player", :intro => intro, :guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => guess_text, :guess_peg_cols => guess_peg_cols, :cor_peg_cols => cor_peg_cols} 
+	intro = "You have x turns left"
+	erb :player, locals: {:parent => "player", :intro => intro, :guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => guess_text, :guess_peg_cols => @@guess_peg_cols, :cor_peg_cols => @@cor_peg_cols} 
 end
 
 get '/ai' do
 	board_init
-	@@game.init_ai
 	intro = "<p>Choose a 4 colour code for the A.I. to guess!"
 	erb :player, locals: {:parent => "ai", :intro => intro, :guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :col_options => @@col_options, :guess_text => nil, :guess_peg_cols => nil, :cor_peg_cols => nil}
 end
@@ -65,6 +65,5 @@ get '/ai/guess' do
 	code = [params["col1"], params["col2"], params["col3"], params["col4"]]
 	guess_text = @@game.ai_plays code 
 	col_pegs
-	erb :ai, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :guess_text => guess_text, :guess_peg_cols => nil, :cor_peg_cols => nil}
-
+	erb :ai, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :guess_text => guess_text, :guess_peg_cols => @@guess_peg_cols, :cor_peg_cols => @@cor_peg_cols}
 end
