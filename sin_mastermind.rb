@@ -62,7 +62,9 @@ get '/ai' do
 end
 
 get '/ai/guess' do
+	code = [params["col1"], params["col2"], params["col3"], params["col4"]]
+	guess_text = @@game.ai_plays code 
 	col_pegs
-	erb :ai, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :guess_text => nil, :guess_peg_cols => nil, :cor_peg_cols => nil}
+	erb :ai, locals: {:guess_pegs => @@guess_pegs, :cor_guess_pegs => @@cor_guess_pegs, :guess_text => guess_text, :guess_peg_cols => nil, :cor_peg_cols => nil}
 
 end

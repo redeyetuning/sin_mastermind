@@ -11,10 +11,10 @@
 class Mastermind
 
   def initialize
-    @turns = 12
+    @turns = 1
     @won = false
-     @guess_peg_cols = []
-     @cor_peg_cols =[]
+    @guess_peg_cols = []
+    @cor_peg_cols =[]
   end
          
   def init_player
@@ -28,23 +28,21 @@ class Mastermind
     
   end
 
-  def ai_plays
-    i = 1
-    won = false
-    guess = ["Blue","Green","Orange","Purple"] # First guess
+  def ai_plays code
+    @code = code
     all_code_optns = ["blue","green","orange","purple","red","yellow"].repeated_permutation(4).to_a#1296 item array of possible answers 
-    @code = get_code("\nChoose your code for the A.I. to guess!")
-    puts "\nYou chose #{@code}\n\n"
-      
-    while i<13 && !won
-      print "A.I.'s' guess \##{i} was #{guess}"
+    guess = ["Blue","Green","Orange","Purple"] # First guess
+    output = ""
+         
+    while @turns <13 && !@won
       won = true if match?(@code,guess) 
       guess_match_result = @lst_match_result.dup
-     	all_code_optns.select! {|x| match?(x,guess,false) || guess_match_result == @lst_match_result} #Simplified implementation of Knuth's Algorithm 
+     	all_code_optns.select! {|x| match?(x,guess) || guess_match_result == @lst_match_result} #Simplified implementation of Knuth's Algorithm 
       guess = all_code_optns.sample
-      i= i+1
+      @turns += 1
+      output += "<p>A.I.'s' guess \##{@turns} was #{guess} had #{@lst_match_result}</p>"
     end 
-    print @lst_match_result
+    output
   end
 
   def peg_cols(item)
@@ -54,15 +52,15 @@ class Mastermind
 
   def move guess
     guess.each{|x| @guess_peg_cols << x}
-    output = match?(guess)
+    output = match?(@code, guess)
     output += "<h2> ******** The code was cracked! ******** </h2>" if @won
-    @turns -= 1
-    output += "<h2> ******** You ran out of Moves! ******** </h2>" if @turns == 0
+    @turns += 1
+    output += "<h2> ******** You ran out of Moves! ******** </h2>" if @turns == 13
     output
   end
 
-  def match? guess
-    test_code = @code.dup
+  def match? code, guess
+    test_code = code.dup
     print test_code  
     test_guess = guess.dup
     @lst_match_result = {:TM=>0,:CM=>0,:X=>0} #TM = Total Match, CM = Colour match
