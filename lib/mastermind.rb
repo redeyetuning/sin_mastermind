@@ -36,7 +36,7 @@ class Mastermind
       guess = all_code_optns.sample
       @turns += 1
     end 
-    "<h2>******** AI found your code in #{13-@turns} turns! ********</h2>"
+    "</br><h3>**AI found your code in #{13-@turns} turns!**</h3>"
   end
 
   def peg_cols(item)
@@ -47,9 +47,9 @@ class Mastermind
   def move guess
     guess.each{|x| @guess_peg_cols << x}
     output = match?(@code, guess)
-    output += "<h2>******** The code was cracked! ********</h2>" if @won
+    output += "</br><h3>******** The code was cracked! ********</h3>" if @won
     @turns += 1
-    output += "<h2>******** You ran out of Moves! ********</h2>" if @turns == 13
+    output += "</br><h3>******** You ran out of Moves! ********</h3>" if @turns == 13
     output
   end
 
