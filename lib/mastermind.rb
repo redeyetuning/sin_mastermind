@@ -36,7 +36,7 @@ class Mastermind
       guess = all_code_optns.sample
       @turns += 1
     end 
-    "</br><h3>**AI found your code in #{13-@turns} turns!**</h3> <p>Your game has ended - please return to the <a class = 'inline' href='../'>main menu</a> to start a new game</p>"
+    "</br><h3>**AI found your code in #{@turns-1} turns!**</h3> <p>Your game has ended - please return to the <a class = 'inline' href='../'>main menu</a> to start a new game</p>"
   end
 
   def peg_cols(item)
@@ -45,12 +45,12 @@ class Mastermind
   end
 
   def move guess
-    if @turns == 13
+    if @won or @turns == 13
       output = "<p>Your game has ended - please return to the <a class = 'inline' href='../'>main menu</a> to start a new game</p>"
     else  
       guess.each{|x| @guess_peg_cols << x}
       output = match?(@code, guess)
-      output += "</br><h3>******** The code was cracked! ********</h3>" && @turns = 13 if @won
+      output += "</br><h3>******** The code was cracked! ********</h3>" if @won
       @turns += 1
       output += "</br><h3>******** You ran out of Moves! ********</h3>" if @turns == 13
     end
